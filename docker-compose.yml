@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./spring-boot-server
+    container_name: spring_boot_backend
+    ports:
+      - "8080:8080"
+    environment:
+      # H2 is in-memory, so usually no additional DB environment needed
+      SPRING_PROFILES_ACTIVE: docker
+
+  frontend:
+    build:
+      context: ./angular-16-client
+    container_name: angular_frontend
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"
